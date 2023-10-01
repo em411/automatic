@@ -9,6 +9,11 @@ import ldm.models.diffusion.ddim
 import ldm.models.diffusion.plms
 import ldm.modules.encoders.modules
 
+import sgm.modules.attention
+import sgm.modules.diffusionmodules.model
+import sgm.modules.diffusionmodules.openaimodel
+import sgm.modules.encoders.modules
+
 import modules.textual_inversion.textual_inversion
 from modules import devices, sd_hijack_optimizations, shared
 from modules.hypernetworks import hypernetwork
@@ -33,6 +38,10 @@ def apply_optimizations():
     undo_optimizations()
     ldm.modules.diffusionmodules.model.nonlinearity = silu
     ldm.modules.diffusionmodules.openaimodel.th = sd_hijack_unet.th
+
+    sgm.modules.diffusionmodules.model.nonlinearity = silu
+    sgm.modules.diffusionmodules.openaimodel.th = sd_hijack_unet.th
+
     optimization_method = None
     can_use_sdp = hasattr(torch.nn.functional, "scaled_dot_product_attention") and callable(torch.nn.functional.scaled_dot_product_attention)
     if devices.device == torch.device("cpu"):
@@ -79,6 +88,10 @@ def undo_optimizations():
     ldm.modules.attention.CrossAttention.forward = hypernetwork.attention_CrossAttention_forward
     ldm.modules.diffusionmodules.model.nonlinearity = diffusionmodules_model_nonlinearity
     ldm.modules.diffusionmodules.model.AttnBlock.forward = diffusionmodules_model_AttnBlock_forward
+
+    sgm.modules.diffusionmodules.model.nonlinearity = diffusionmodules_model_nonlinearity
+    sgm.modules.attention.CrossAttention.forward = hypernetwork.attention_CrossAttention_forward
+    sgm.modules.diffusionmodules.model.AttnBlock.forward = diffusionmodules_model_AttnBlock_forward
 
 
 def fix_checkpoint():

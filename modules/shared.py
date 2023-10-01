@@ -589,6 +589,7 @@ options_templates.update(options_section(('sampler-params', "Sampler Settings"),
     's_noise': OptionInfo(1.0, "sigma noise", gr.Slider, {"minimum": 0.0, "maximum": 1.0, "step": 0.01}),
     'always_discard_next_to_last_sigma': OptionInfo(False, "Always discard next-to-last sigma"),
     'never_discard_next_to_last_sigma': OptionInfo(False, "Never discard next-to-last sigma"),
+    'sgm_noise_multiplier': OptionInfo(False, "SGM noise multiplier"),
 
     "schedulers_sep_compvis": OptionInfo("<h2>CompVis specific config</h2>", "", gr.HTML),
     "ddim_discretize": OptionInfo('uniform', "DDIM discretize img2img", gr.Radio, {"choices": ['uniform', 'quad']}),

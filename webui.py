@@ -14,6 +14,7 @@ from modules import timer, errors, paths # pylint: disable=unused-import
 local_url = None
 from installer import log, git_commit, custom_excepthook
 import ldm.modules.encoders.modules # pylint: disable=W0611,C0411,E0401
+import sgm.modules.encoders.modules
 from modules import shared, extensions, extra_networks, ui_tempdir, ui_extra_networks, modelloader # pylint: disable=ungrouped-imports
 from modules.paths import create_paths
 from modules.call_queue import queue_lock, wrap_queued_call, wrap_gradio_gpu_call # pylint: disable=W0611,C0411,C0412

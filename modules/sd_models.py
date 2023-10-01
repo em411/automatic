@@ -467,7 +467,7 @@ def load_model_weights(model: torch.nn.Module, checkpoint_info: CheckpointInfo, 
         if depth_model:
             model.depth_model = depth_model
     if shared.opts.cuda_cast_unet:
-        devices.dtype_unet = model.model.diffusion_model.dtype
+        devices.dtype_unet = torch.float16 if model.is_sdxl and not shared.cmd_opts.no_half else model.model.diffusion_model.dtype
     else:
         model.model.diffusion_model.to(devices.dtype_unet)
     model.first_stage_model.to(devices.dtype_vae)
